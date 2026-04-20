@@ -1,81 +1,55 @@
-# 🐸 Jeu de Saute-Mouton - Interface Interactive (TP POO)
+# 🐸 Simulateur Interactif Saute-Mouton - TP POO
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Java](https://img.shields.io/badge/Java-Algorithms-007396?style=for-the-badge&logo=java&logoColor=white)
 ![USTHB](https://img.shields.io/badge/USTHB-FGE-9334e6?style=for-the-badge)
 
-Ce dépôt contient le compte rendu et la solution interactive pour le **TP N°3 : Programmation des systèmes par les méthodes de POO**, réalisé dans le cadre du module de Programmation Orientée Objet (M1 AII).
+[cite_start]Ce dépôt contient le projet complet (Code source Java et Interface Web Interactive) pour le **TP N°3 : Programmation des systèmes par les méthodes de POO**[cite: 5]. 
 
-L'implémentation algorithmique initiale en Java a été transposée en une **interface Web interactive** avec un design inspiré du *Google Pixel* (tons bleu, cyan et violet).
-
----
-
-## 📋 Table des matières
-1. [À propos du projet](#-à-propos-du-projet)
-2. [Fonctionnalités et Interface](#-fonctionnalités-et-interface)
-3. [Règles du jeu](#-règles-du-jeu)
-4. [Installation et Exécution](#-installation-et-exécution)
-5. [Structure Technique](#-structure-technique)
-6. [Auteur](#-auteur)
+L'application modélise et résout le problème algorithmique du jeu "Saute-Mouton", en intégrant le code source de l'algorithme ainsi qu'une interface graphique moderne (thème Material/Google Pixel) dotée d'un moteur d'exécution en temps réel.
 
 ---
 
-## 💡 À propos du projet
-
-Ce projet démontre l'application des concepts algorithmiques de la POO pour résoudre le casse-tête classique du "Saute-Mouton". Au lieu d'une simple exécution statique en console, ce compte rendu intègre un panneau d'exécution dynamique jouable directement dans le navigateur.
-
-**Contexte académique :**
-* **Université :** USTHB (Université des Sciences et de la Technologie Houari Boumediene)
-* **Faculté :** FGE (Génie Électrique) - Département d'Automatique
-* **Niveau :** Master 1 AII
-* **Enseignant :** M. MENANI
+## 🎓 Contexte Académique
+* [cite_start]**Université :** Université des Sciences et de la Technologie HOUARI BOUMEDIENE - USTHB [cite: 1]
+* [cite_start]**Faculté :** Faculté de Génie Electrique FGE - Département d'Automatique [cite: 2]
+* [cite_start]**Module :** TP POO [cite: 3]
+* [cite_start]**Niveau & Spécialité :** Master 1 AII (Automatique) [cite: 4]
+* [cite_start]**Enseignant :** M. MENANI [cite: 38]
 
 ---
 
-## ✨ Fonctionnalités et Interface
-
-* **Design "Google Pixel" :** Interface utilisateur épurée utilisant les polices `Roboto` et une palette de couleurs moderne (Bleu Google, Cyan, Violet).
-* **Panneau Interactif Temps Réel :** Les pions sont cliquables et se déplacent dynamiquement sur l'écran avec des animations de survol.
-* **Console Intégrée (Live Log) :** Une fausse console stylisée affiche en temps réel les mouvements effectués, les erreurs (coups interdits) et les états de fin de partie.
-* **Moteur Logique JS :** L'algorithme de vérification des coups et de détection de blocage/victoire tourne en temps réel en arrière-plan.
-
----
-
-## 🎯 Règles du jeu
-
-Sur un plateau défini par l'utilisateur, des pions **Noirs (N)** sont placés à gauche et des pions **Rouges (R)** à droite, séparés par une **case vide**. 
-
-* **But :** Inverser les positions (Rouges à gauche, Noirs à droite, espace au centre).
-* **Déplacements :**
-  * Les **Noirs** se déplacent uniquement vers la **droite**.
-  * Les **Rouges** se déplacent uniquement vers la **gauche**.
-  * Un pion peut avancer d'une case (si vide) ou sauter **un** pion adverse (si la case suivante est vide).
+## 🎯 Règles du Système Modélisé
+Le système est basé sur un plateau unidimensionnel avec des règles de transition strictes :
+* [cite_start]**Configuration initiale :** Des pions noirs sont placés à gauche et des pions rouges à droite, séparés par une case vide unique[cite: 64]. [cite_start]On pose autant de pions noirs que de pions rouges[cite: 65].
+* [cite_start]**Objectif :** Déplacer tous les pions rouges vers la gauche et tous les pions noirs vers la droite, la case vide occupant à la fin du jeu la case du milieu[cite: 67].
+* **Contraintes de déplacement :**
+  * [cite_start]Les pions noirs ne peuvent se déplacer que vers la droite[cite: 74].
+  * [cite_start]Les pions rouges ne peuvent se déplacer que vers la gauche[cite: 75].
+  * [cite_start]Un pion peut avancer d'une case si la case adjacente est vide[cite: 77, 82].
+  * [cite_start]Un pion peut sauter par-dessus un seul pion adverse si la case située juste après cet obstacle est vide[cite: 80, 83].
+* [cite_start]**Condition d'arrêt :** Le jeu s'arrête si la configuration finale est atteinte (victoire) ou si vous avez atteint une situation de blocage matériel (défaite)[cite: 97, 98].
 
 ---
 
-## 🚀 Installation et Exécution
-
-Oubliez la compilation Java complexe pour tester le rendu visuel ! 
-
-1. **Cloner ou télécharger** ce dépôt.
-2. Ouvrez simplement le fichier `index.html` (ou le nom que vous avez donné au fichier) avec n'importe quel navigateur web moderne (Chrome, Firefox, Edge, Safari).
-3. Le jeu est prêt à être utilisé dans la section "Panneau d'Exécution Temps Réel".
+## ✨ Fonctionnalités Principales
+* **Moteur Logique Strict :** L'algorithme vérifie rigoureusement chaque déplacement selon l'arbre de décision exigé par le cahier des charges.
+* **Détection de Deadlock :** Scan matériel complet du tableau à chaque itération pour identifier les situations de blocage irrémédiables.
+* **Architecture Web Monolithique :** Un fichier HTML/CSS/JS unique regroupant la théorie, le code Java syntaxiquement mis en valeur, et le simulateur interactif.
+* **Design "Google Pixel" :** Interface utilisateur soignée avec une palette de couleurs professionnelle (Bleu, Cyan, Violet), ombres dynamiques et typographie claire (`Roboto` / `Fira Code`).
+* **Console d'Exécution Temps Réel :** Panneau de débogage affichant l'historique des coups, les logs systèmes, les index de la mémoire et la détection d'erreurs en direct.
 
 ---
 
-## ⚙️ Structure Technique
-
-Le fichier unique regroupe :
-* **HTML5 :** Sémantique et structure du compte rendu académique.
-* **CSS3 :** Variables personnalisées (`:root`), Flexbox pour le plateau de jeu, et effets visuels (ombres, transitions).
-* **JavaScript (Vanilla) :** * `initialiserJeu()` : Construction dynamique du plateau.
-  * `jouerCoup(index)` : Cœur algorithmique gérant les règles d'avancement et de saut.
-  * `verifierFin()` : Analyse du tableau pour déclarer la victoire ou un blocage.
-  * `log()` : Injection de texte dans la console virtuelle.
+## 🚀 Déploiement et Utilisation
+L'avantage de cette version "Ultimate" est qu'elle est prête à être déployée sur GitHub Pages et ne nécessite aucune compilation Java pour visualiser les résultats de la logique :
+1. Téléchargez le fichier `index.html`.
+2. Ouvrez-le simplement dans un navigateur web moderne (Chrome, Edge, Firefox, Safari).
+3. [cite_start]Utilisez le panneau de contrôle interactif pour tester l'algorithme : ajustez le nombre de pions (N maximum = 10 [cite: 136]) et cliquez sur les éléments pour simuler les déplacements en mémoire.
 
 ---
 
 ## 👨‍💻 Auteur
-
-**Dahane Ahmed Lamine** *Étudiant en M1 Automatique et Informatique Industrielle (AII)* *Design & Code : Interface Utilisateur Professionnelle*
+**Dahane Ahmed Lamine** *Spécialité Automatique et Informatique Industrielle - Développement d'Interfaces et Systèmes*
