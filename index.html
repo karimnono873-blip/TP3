@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte Rendu TP N°03 - Saute Mouton - Dahane Ahmed Lamine</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* -----------------------------------------------------------
+           VARIABLES CSS GLOBALES (PALETTE GOOGLE PIXEL & MATERIAL DESIGN)
+           ----------------------------------------------------------- */
+        :root {
+            /* Couleurs Principales (Thème demandé) */
+            --google-blue: #1a73e8;
+            --google-cyan: #12b5cb;
+            --google-violet: #9334e6;
+            
+            /* Dégradés */
+            --gradient-primary: linear-gradient(135deg, var(--google-blue), var(--google-cyan), var(--google-violet));
+            --gradient-secondary: linear-gradient(to right, var(--google-blue), var(--google-cyan));
+            
+            /* Couleurs de fond et surfaces */
+            --bg-body: #f8f9fa;
+            --surface-white: #ffffff;
+            --surface-gray: #f1f3f4;
+            --surface-dark: #202124;
+            
+            /* Couleurs de texte */
+            --text-primary: #202124;
+            --text-secondary: #5f6368;
+            --text-inverse: #ffffff;
+            
+            /* Couleurs sémantiques (pour la console et le jeu) */
+            --color-success: #1e8e3e;
+            --color-error: #d93025;
+            --color-warning: #f9ab00;
+            
+            /* Pions */
+            --pion-red: #ea4335;
+            --pion-black: #3c4043;
+            
+            /* Paramètres de mise en page */
+            --border-radius-lg: 24px;
+            --border-radius-md: 12px;
+            --border-radius-sm: 8px;
+            --box-shadow-1: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            --box-shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --box-shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            
+            /* Transitions */
+            --transition-standard: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        /* -----------------------------------------------------------
+           RESET ET BASES
+           ----------------------------------------------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* -----------------------------------------------------------
+           CONTENEUR PRINCIPAL ET MISE EN PAGE
+           ----------------------------------------------------------- */
+        .master-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            background-color: var(--surface-white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* -----------------------------------------------------------
+           PAGE DE GARDE (HEADER)
+           ----------------------------------------------------------- */
+        .header-section {
+            background: var(--gradient-primary);
+            padding: 80px 40px;
+            text-align: center;
+            color: var(--text-inverse);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Effet visuel d'arrière-plan abstrait */
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .univ-title {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .sub-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 50px;
+        }
+
+        .student-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px 40px;
+            border-radius: var(--border-radius-md);
+            display: inline-block;
+            text-align: left;
+            box-shadow: var(--box-shadow-1);
+        }
+
+        .student-card p {
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .student-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* -----------------------------------------------------------
+           CONTENU PRINCIPAL
+           ----------------------------------------------------------- */
+        .content-body {
+            padding: 50px 60px;
+        }
+
+        h2.section-title {
+            font-size: 2rem;
+            color: var(--google-blue);
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--surface-gray);
+            display: flex;
+            align-items: center;
+        }
+
+        h2.section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 32px;
+            background: var(--gradient-secondary);
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        h3.subsection-title {
+            font-size: 1.4rem;
+            color: var(--google-violet);
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+
+        p.text-paragraph {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        ul.feature-list {
+            list-style-type: none;
+            margin-left: 20px;
+            margin-bottom: 25px;
+        }
+
+        ul.feature-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        ul.feature-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--google-cyan);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* -----------------------------------------------------------
+           BLOCS DE CODE (JAVA)
+           ----------------------------------------------------------- */
+        .code-container {
+            background-color: var(--surface-dark);
+            border-radius: var(--border-radius-md);
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+            overflow-x: auto;
+        }
+
+        .code-container pre {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #e8eaed;
+        }
+
+        /* Coloration syntaxique basique */
+        .syntax-keyword { color: #c678dd; }
+        .syntax-type { color: #56b6c2; }
+        .syntax-string { color: #98c379; }
+        .syntax-comment { color: #7f848e; font-style: italic; }
+        .syntax-number { color: #d19a66; }
+        .syntax-method { color: #61afef; }
+
+        /* -----------------------------------------------------------
+           INTERFACE DU JEU INTERACTIF (WIDGET WEB)
+           ----------------------------------------------------------- */
+        .game-widget {
+            background-color: var(--surface-gray);
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius-lg);
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--surface-white);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: var(--box-shadow-1);
+        }
+
+        .control-group label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .control-group input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+            outline: none;
+            transition: var(--transition-standard);
+        }
+
+        .control-group input:focus {
+            border-color: var(--google-blue);
+            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+        }
+
+        .btn {
+            background: var(--gradient-secondary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: var(--box-shadow-1);
+            transition: var(--transition-standard);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow-2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-reset {
+            background: var(--surface-white);
+            color: var(--text-primary);
+            border: 1px solid #ccc;
+        }
+        
+        .btn-reset:hover {
+            background: #e0e0e0;
+        }
+
+        /* Le Plateau de Jeu */
+        .board-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 40px 0;
+            min-height: 120px;
+        }
+
+        .board-tiles {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 15px;
+            background: #e8eaed;
+            border-radius: 20px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .tile-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tile-index {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .pion {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            box-shadow: var(--box-shadow-2);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+            user-select: none;
+            position: relative;
+        }
+
+        .pion:hover:not(.vide) {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: var(--box-shadow-3);
+        }
+
+        .pion:active:not(.vide) {
+            transform: translateY(-2px) scale(0.95);
+        }
+
+        /* Styles spécifiques des pions */
+        .pion.N {
+            background: linear-gradient(145deg, #4a4d51, #2b2d30);
+            border: 2px solid #5f6368;
+        }
+
+        .pion.R {
+            background: linear-gradient(145deg, #f25c50, #d93025);
+            border: 2px solid #fbbc04;
+        }
+
+        .pion.vide {
+            background: transparent;
+            border: 2px dashed #bdc1c6;
+            box-shadow: none;
+            cursor: default;
+        }
+
+        /* Effet de brillance sur les pions jouables */
+        .pion.jouable {
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(26, 115, 232, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(26, 115, 232, 0); }
+        }
+
+        /* Animation de déplacement (gérée en JS via classes) */
+        .moving-left { animation: slideLeft 0.3s ease-in-out; }
+        .moving-right { animation: slideRight 0.3s ease-in-out; }
+        .jumping-left { animation: jumpLeft 0.4s ease-in-out; }
+        .jumping-right { animation: jumpRight 0.4s ease-in-out; }
+
+        @keyframes slideLeft { 0% { transform: translateX(82px); } 100% { transform: translateX(0); } }
+        @keyframes slideRight { 0% { transform: translateX(-82px); } 100% { transform: translateX(0); } }
+        @keyframes jumpLeft { 
+            0% { transform: translateX(164px) translateY(0); } 
+            50% { transform: translateX(82px) translateY(-40px); } 
+            100% { transform: translateX(0) translateY(0); } 
+        }
+        @keyframes jumpRight { 
+            0% { transform: translateX(-164px) translateY(0); } 
+            50% { transform: translateX(-82px) translateY(-40px); } 
+            100% { transform: translateX(0) translateY(0); } 
+        }
+
+        /* -----------------------------------------------------------
+           CONSOLE D'EXECUTION EN TEMPS REEL
+           ----------------------------------------------------------- */
+        .execution-panel {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .live-console-wrapper {
+            background-color: var(--surface-dark);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--box-shadow-2);
+        }
+
+        .console-header {
+            background-color: #303134;
+            padding: 10px 15px;
+            color: #e8eaed;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #4a4d51;
+        }
+
+        .console-dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        .dot-red { background-color: #ff5f56; }
+        .dot-yellow { background-color: #ffbd2e; }
+        .dot-green { background-color: #27c93f; }
+
+        .live-console {
+            padding: 15px;
+            height: 250px;
+            overflow-y: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #a8c7fa;
+            line-height: 1.5;
+        }
+
+        /* Personnalisation de la scrollbar de la console */
+        .live-console::-webkit-scrollbar {
+            width: 8px;
+        }
+        .live-console::-webkit-scrollbar-track {
+            background: #202124;
+        }
+        .live-console::-webkit-scrollbar-thumb {
+            background: #5f6368;
+            border-radius: 4px;
+        }
+
+        .log-entry {
+            margin-bottom: 6px;
+            padding-left: 15px;
+            position: relative;
+            opacity: 0;
+            animation: fadeInLog 0.3s forwards;
+        }
+
+        .log-entry::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: #5f6368;
+        }
+
+        @keyframes fadeInLog {
+            to { opacity: 1; }
+        }
+
+        .log-info { color: #a8c7fa; }
+        .log-success { color: #81c995; font-weight: bold; }
+        .log-error { color: #f28b82; }
+        .log-warning { color: #fdd663; }
+        .log-system { color: #c58af9; }
+
+        /* Panneau de statistiques */
+        .stats-panel {
+            background: var(--surface-white);
+            border-radius: var(--border-radius-md);
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: var(--surface-gray);
+            padding: 15px;
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--google-blue);
+        }
+
+        /* -----------------------------------------------------------
+           FOOTER
+           ----------------------------------------------------------- */
+        .footer-section {
+            background-color: var(--surface-gray);
+            padding: 30px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .footer-signature {
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        /* Responsivité de base */
+        @media (max-width: 768px) {
+            .execution-panel { grid-template-columns: 1fr; }
+            .header-section { padding: 40px 20px; }
+            .main-title { font-size: 2rem; }
+            .content-body { padding: 30px 20px; }
+        }
+    </style>
+    </head>
+<body>
+
+    <div class="master-container">
+        
+        <header class="header-section">
+            <div class="univ-title">USTHB - Faculté de Génie Electrique | Dpt. d'Automatique</div>
+            <h1 class="main-title">Compte Rendu TP N°03 : POO</h1>
+            <h2 class="sub-title">Programmation des Systèmes - Jeu du Saute-Mouton</h2>
+            
+            <div class="student-card">
+                <p>Réalisé par : <span class="highlight-name">Dahane Ahmed Lamine</span></p>
+                <p>Niveau : <strong>Master 1 AII</strong> (Automatique et Informatique Industrielle)</p>
+                <p>Enseignant : <strong>M. MENANI</strong></p>
+                <p>Date : 20 Avril 2026</p>
+            </div>
+        </header>
+
+        <main class="content-body">
+            
+            <h2 class="section-title">1. Contexte Théorique et Objectifs du TP</h2>
+            <p class="text-paragraph">
+                L'objectif principal de ce troisième Travail Pratique est de mettre en œuvre les concepts fondamentaux de la 
+                <strong>Programmation Orientée Objet (POO)</strong> à travers un langage fortement typé tel que Java. Le cas d'étude
+                choisi est le jeu classique du "Saute-Mouton", un problème algorithmique qui nécessite une gestion rigoureuse 
+                de l'état d'un système (ici, modélisé par un tableau unidimensionnel) et l'application de contraintes de déplacement strictes.
+            </p>
+            
+            <h3 class="subsection-title">1.1. Rappel sur la gestion de la mémoire (Tableaux en Java)</h3>
+            <p class="text-paragraph">
+                Contrairement au C++ où la taille d'un tableau statique doit être connue à la compilation, Java permet une allocation 
+                dynamique à l'exécution via le mot-clé <code>new</code>. Dans notre contexte, la taille du plateau de jeu est déterminée 
+                par l'utilisateur au moment de l'initialisation. La déclaration <code>char[] Plateau;</code> crée uniquement une référence. 
+                L'instanciation réelle s'effectue avec <code>Plateau = new char[2 * nbPions + 1];</code>, allouant un espace contigu 
+                en mémoire dans le "Heap" (tas). Cette flexibilité est cruciale pour respecter le cahier des charges du TP.
+            </p>
+
+            <h3 class="subsection-title">1.2. Formalisation des Règles du Jeu</h3>
+            <p class="text-paragraph">
+                Le système est défini par un automate à états finis. Les règles de transition (les "coups") sont contraintes :
+            </p>
+            <ul class="feature-list">
+                <li><strong>Asymétrie directionnelle :</strong> Les pions Noirs ('N') ne progressent que vers l'index supérieur (droite), tandis que les pions Rouges ('R') ne progressent que vers l'index inférieur (gauche).</li>
+                <li><strong>Déplacement simple :</strong> Un pion peut avancer d'une case (Δ = ±1) si et seulement si l'index cible correspond à l'espace vide.</li>
+                <li><strong>Saut par-dessus un obstacle :</strong> Un pion peut effectuer un bond (Δ = ±2) si la case cible est vide <strong>ET</strong> que la case intermédiaire (Δ = ±1) contient un pion de la faction opposée.</li>
+                <li><strong>Condition d'arrêt :</strong> Le jeu se termine soit par un succès (la configuration initiale est parfaitement inversée), soit par un blocage matériel (aucune transition valide n'est possible pour l'ensemble des pions restants).</li>
+            </ul>
+
+            <h2 class="section-title">2. Implémentation : Code Source Java</h2>
+            <p class="text-paragraph">
+                Le code suivant représente la solution monolithique répondant strictement à l'arbre algorithmique fourni dans l'énoncé du TP. 
+                Il intègre les sous-programmes obligatoires : initialisation, affichage, exécution d'un coup, et vérification de la fin de jeu.
+            </p>
+
+            <div class="code-container">
+<pre><code><span class="syntax-keyword">import</span> java.util.Scanner;
+
+<span class="syntax-comment">/**
+ * Classe principale résolvant le problème du Saute-Mouton.
+ * Auteur : Dahane Ahmed Lamine (M1 AII)
+ */</span>
+<span class="syntax-keyword">public class</span> <span class="syntax-type">SauteMouton</span> {
+    
+    <span class="syntax-comment">// Déclaration des variables globales selon les exigences de M. Menani</span>
+    <span class="syntax-keyword">static final int</span> NbMAX = <span class="syntax-number">10</span>; <span class="syntax-comment">// Nombre maximum de pions par couleur</span>
+    <span class="syntax-keyword">static char</span>[] Plateau;         <span class="syntax-comment">// Le plateau modélisant le système</span>
+    <span class="syntax-keyword">static int</span> nbPions;            <span class="syntax-comment">// Nombre de pions par couleur choisi par l'utilisateur</span>
+    <span class="syntax-keyword">static int</span> indVide;            <span class="syntax-comment">// Pointeur constant vers l'index de la case vide</span>
+
+    <span class="syntax-keyword">public static void</span> <span class="syntax-method">main</span>(String[] args) {
+        Scanner scanner = <span class="syntax-keyword">new</span> Scanner(System.in);
+        <span class="syntax-keyword">boolean</span> rejouer = <span class="syntax-keyword">true</span>;
+
+        <span class="syntax-comment">// Boucle principale du programme (Permet de relancer une partie)</span>
+        <span class="syntax-keyword">while</span> (rejouer) {
+            initialiserPlateau(scanner);
+            <span class="syntax-keyword">boolean</span> fini = <span class="syntax-keyword">false</span>;
+
+            <span class="syntax-comment">// Boucle d'exécution d'une partie (Automate)</span>
+            <span class="syntax-keyword">while</span> (!fini) {
+                afficherPlateau();
+                jouerCoup(scanner);
+                fini = finDeJeu();
+            }
+
+            System.out.print(<span class="syntax-string">"\nVoulez-vous refaire une partie ? (O/N) : "</span>);
+            <span class="syntax-keyword">char</span> rep = scanner.next().toUpperCase().charAt(<span class="syntax-number">0</span>);
+            <span class="syntax-keyword">if</span> (rep != <span class="syntax-string">'O'</span>) rejouer = <span class="syntax-keyword">false</span>;
+        }
+        scanner.close();
+        System.out.println(<span class="syntax-string">"Fin du programme."</span>);
+    }
+
+    <span class="syntax-comment">/**
+     * Module 1 : Initialisation dynamique du système
+     */</span>
+    <span class="syntax-keyword">static void</span> <span class="syntax-method">initialiserPlateau</span>(Scanner scanner) {
+        <span class="syntax-keyword">do</span> {
+            System.out.print(<span class="syntax-string">"Entrez le nombre de pions (max "</span> + NbMAX + <span class="syntax-string">") : "</span>);
+            nbPions = scanner.nextInt();
+        } <span class="syntax-keyword">while</span> (nbPions <= <span class="syntax-number">0</span> || nbPions > NbMAX);
+
+        <span class="syntax-comment">// Allocation dynamique (N pions noirs + 1 espace + N pions rouges)</span>
+        Plateau = <span class="syntax-keyword">new char</span>[<span class="syntax-number">2</span> * nbPions + <span class="syntax-number">1</span>];
+        
+        <span class="syntax-comment">// Remplissage de la moitié gauche avec 'N'</span>
+        <span class="syntax-keyword">for</span> (<span class="syntax-keyword">int</span> i = <span class="syntax-number">0</span>; i < nbPions; i++) Plateau[i] = <span class="syntax-string">'N'</span>;
+        
+        <span class="syntax-comment">// Positionnement de la case vide au centre</span>
+        indVide = nbPions;
+        Plateau[indVide] = <span class="syntax-string">' '</span>;
+        
+        <span class="syntax-comment">// Remplissage de la moitié droite avec 'R'</span>
+        <span class="syntax-keyword">for</span> (<span class="syntax-keyword">int</span> i = nbPions + <span class="syntax-number">1</span>; i < <span class="syntax-number">2</span> * nbPions + <span class="syntax-number">1</span>; i++) Plateau[i] = <span class="syntax-string">'R'</span>;
+    }
+
+    <span class="syntax-comment">/**
+     * Module 2 : Affichage de l'état actuel de la mémoire (Rendu visuel)
+     */</span>
+    <span class="syntax-keyword">static void</span> <span class="syntax-method">afficherPlateau</span>() {
+        System.out.println(<span class="syntax-string">"\nPlateau actuel :"</span>);
+        <span class="syntax-keyword">for</span> (<span class="syntax-keyword">int</span> i = <span class="syntax-number">0</span>; i < Plateau.length; i++) {
+            System.out.print(<span class="syntax-string">"["</span> + Plateau[i] + <span class="syntax-string">"]"</span>);
+        }
+        System.out.println();
+        <span class="syntax-comment">// Affichage des index pour guider l'utilisateur</span>
+        <span class="syntax-keyword">for</span> (<span class="syntax-keyword">int</span> i = <span class="syntax-number">0</span>; i < Plateau.length; i++) {
+            System.out.print(<span class="syntax-string">" "</span> + i + <span class="syntax-string">" "</span>);
+        }
+        System.out.println();
+    }
+
+    <span class="syntax-comment">/**
+     * Module 3 : Logique de transition d'état et vérification des contraintes
+     */</span>
+    <span class="syntax-keyword">static void</span> <span class="syntax-method">jouerCoup</span>(Scanner scanner) {
+        System.out.print(<span class="syntax-string">"Index du pion à déplacer : "</span>);
+        <span class="syntax-keyword">int</span> pos = scanner.nextInt();
+
+        <span class="syntax-comment">// Sécurité 1 : Out of Bounds Exception Prevention</span>
+        <span class="syntax-keyword">if</span> (pos < <span class="syntax-number">0</span> || pos >= Plateau.length || pos == indVide) {
+            System.out.println(<span class="syntax-string">"Erreur : Sélection invalide."</span>);
+            <span class="syntax-keyword">return</span>;
+        }
+
+        <span class="syntax-keyword">char</span> pion = Plateau[pos];
+
+        <span class="syntax-comment">// Arbre de décision selon l'algorithme du PDF</span>
+        <span class="syntax-keyword">if</span> (pion == <span class="syntax-string">'R'</span>) {
+            <span class="syntax-keyword">if</span> (pos - <span class="syntax-number">1</span> == indVide) {
+                <span class="syntax-comment">// Cas 1 : Déplacement simple à gauche</span>
+                echanger(pos, indVide);
+            } <span class="syntax-keyword">else if</span> (pos - <span class="syntax-number">2</span> == indVide && Plateau[pos - <span class="syntax-number">1</span>] == <span class="syntax-string">'N'</span>) {
+                <span class="syntax-comment">// Cas 2 : Saut par-dessus un Noir vers la gauche</span>
+                echanger(pos, indVide);
+            } <span class="syntax-keyword">else</span> {
+                System.out.println(<span class="syntax-string">"Règle violée : Coup interdit pour le Rouge."</span>);
+            }
+        } <span class="syntax-keyword">else if</span> (pion == <span class="syntax-string">'N'</span>) {
+            <span class="syntax-keyword">if</span> (pos + <span class="syntax-number">1</span> == indVide) {
+                <span class="syntax-comment">// Cas 1 : Déplacement simple à droite</span>
+                echanger(pos, indVide);
+            } <span class="syntax-keyword">else if</span> (pos + <span class="syntax-number">2</span> == indVide && Plateau[pos + <span class="syntax-number">1</span>] == <span class="syntax-string">'R'</span>) {
+                <span class="syntax-comment">// Cas 2 : Saut par-dessus un Rouge vers la droite</span>
+                echanger(pos, indVide);
+            } <span class="syntax-keyword">else</span> {
+                System.out.println(<span class="syntax-string">"Règle violée : Coup interdit pour le Noir."</span>);
+            }
+        }
+    }
+
+    <span class="syntax-comment">/**
+     * Sous-module utilitaire : Swap en mémoire
+     */</span>
+    <span class="syntax-keyword">static void</span> <span class="syntax-method">echanger</span>(<span class="syntax-keyword">int</span> p1, <span class="syntax-keyword">int</span> p2) {
+        <span class="syntax-keyword">char</span> temp = Plateau[p1];
+        Plateau[p1] = Plateau[p2];
+        Plateau[p2] = temp;
+        <span class="syntax-comment">// Mise à jour critique du pointeur de la case vide</span>
+        indVide = p1; 
+    }
+
+    <span class="syntax-comment">/**
+     * Module 4 : Analyse de l'état final (Victoire ou Deadlock)
+     */</span>
+    <span class="syntax-keyword">static boolean</span> <span class="syntax-method">finDeJeu</span>() {
+        <span class="syntax-comment">// Scan de Victoire : Les Rouges ont-ils envahi la partie gauche ?</span>
+        <span class="syntax-keyword">boolean</span> gagne = <span class="syntax-keyword">true</span>;
+        <span class="syntax-keyword">for</span> (<span class="syntax-keyword">int</span> i = <span class="syntax-number">0</span>; i < nbPions; i++) {
+            <span class="syntax-keyword">if</span> (Plateau[i] != <span class="syntax-string">'R'</span>) gagne = <span class="syntax-keyword">false</span>;
+        }
+        <span class="syntax-keyword">if</span> (gagne) {
+            System.out.println(<span class="syntax-string">"*** SUCCÈS : Configuration finale atteinte ! ***"</span>);
+            <span class="syntax-keyword">return true</span>;
+        }
+
+        <span class="syntax-comment">// Scan de Blocage (Deadlock Detection Algorithm)</span>
+        <span class="syntax-keyword">boolean</span> bloque = <span class="syntax-keyword">true</span>;
+        <span class="syntax-keyword">for</span> (<span class="syntax-keyword">int</span> i = <span class="syntax-number">0</span>; i < Plateau.length; i++) {
+            <span class="syntax-keyword">if</span> (i == indVide) <span class="syntax-keyword">continue</span>; <span class="syntax-comment">// Ignorer l'espace vide</span>
+            
+            <span class="syntax-comment">// Existe-t-il au moins UN pion rouge pouvant bouger ?</span>
+            <span class="syntax-keyword">if</span> (Plateau[i] == <span class="syntax-string">'R'</span> && (i - <span class="syntax-number">1</span> == indVide || (i - <span class="syntax-number">2</span> == indVide && Plateau[i - <span class="syntax-number">1</span>] == <span class="syntax-string">'N'</span>))) {
+                bloque = <span class="syntax-keyword">false</span>; <span class="syntax-keyword">break</span>;
+            }
+            <span class="syntax-comment">// Existe-t-il au moins UN pion noir pouvant bouger ?</span>
+            <span class="syntax-keyword">if</span> (Plateau[i] == <span class="syntax-string">'N'</span> && (i + <span class="syntax-number">1</span> == indVide || (i + <span class="syntax-number">2</span> == indVide && Plateau[i + <span class="syntax-number">1</span>] == <span class="syntax-string">'R'</span>))) {
+                bloque = <span class="syntax-keyword">false</span>; <span class="syntax-keyword">break</span>;
+            }
+        }
+
+        <span class="syntax-keyword">if</span> (bloque) {
+            System.out.println(<span class="syntax-string">"!!! ECHEC : Situation de blocage détectée. !!!"</span>);
+            <span class="syntax-keyword">return true</span>;
+        }
+        
+        <span class="syntax-comment">// Le jeu continue</span>
+        <span class="syntax-keyword">return false</span>;
+    }
+}</code></pre>
+            </div>
+
+            <h3 class="subsection-title">2.1. Explications et Analyse Algorithmique</h3>
+            <p class="text-paragraph">
+                Le code ci-dessus, bien que procédural dans sa syntaxe interne, pose les bases de la création d'une classe d'objet `SauteMouton`. 
+                Chaque méthode (`initialiserPlateau`, `jouerCoup`, etc.) représente un comportement encapsulé du système.
+            </p>
+            <p class="text-paragraph">
+                <strong>Analyse de la complexité :</strong> 
+                La méthode la plus coûteuse en temps d'exécution est `finDeJeu()`. Lors de la détection de blocage, elle doit parcourir le tableau de taille `T = 2N + 1`. 
+                La complexité temporelle est donc de l'ordre de <strong>O(N)</strong>, où N est le nombre de pions par équipe. 
+                L'échange de pions dans `echanger()` se fait en temps constant <strong>O(1)</strong> grâce à la variable temporaire.
+                La complexité spatiale est également de <strong>O(N)</strong>, ce qui garantit une exécution extrêmement rapide même pour des valeurs de N très élevées (bien que le TP limite N à 10 pour des raisons de jouabilité humaine).
+            </p>
+
+            <h2 class="section-title">3. Exécution Interactive Temps Réel (Web Engine)</h2>
+            <p class="text-paragraph">
+                Afin de démontrer l'efficacité de l'algorithme implémenté en Java, j'ai développé ce panneau d'exécution interactif en JavaScript. 
+                Il utilise <strong>strictement la même logique conditionnelle</strong> que le code Java. L'interface graphique a été conçue 
+                pour offrir un retour visuel immédiat (animations, logs de console, prévention des erreurs).
+            </p>
+
+            <div class="game-widget">
+                
+                <div class="game-header">
+                    <div class="control-group">
+                        <label for="inputNbPions">Nombre de pions (N) :</label>
+                        <input type="number" id="inputNbPions" value="3" min="1" max="10">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-reset" onclick="GameEngine.initialize()">Réinitialiser</button>
+                        <button class="btn" onclick="GameEngine.initialize()">Lancer la Simulation</button>
+                    </div>
+                </div>
+
+                <div class="board-container">
+                    <div class="board-tiles" id="domBoard">
+                        </div>
+                </div>
+
+                <div class="execution-panel">
+                    
+                    <div class="live-console-wrapper">
+                        <div class="console-header">
+                            <div class="console-dots">
+                                <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+                            </div>
+                            <span>USTHB_M1_AII_Terminal - /bin/bash</span>
+                        </div>
+                        <div class="live-console" id="domConsole">
+                            </div>
+                    </div>
+
+                    <div class="stats-panel">
+                        <div class="stat-box">
+                            <div class="stat-label">Coups Joués</div>
+                            <div class="stat-value" id="statMoves">0</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Statut du Système</div>
+                            <div class="stat-value" id="statStatus" style="font-size: 1.2rem; margin-top: 10px;">En attente</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h2 class="section-title">4. Conclusion et Retour d'Expérience</h2>
+            <p class="text-paragraph">
+                Ce TP a été une excellente opportunité d'appliquer la rigueur algorithmique nécessaire au développement logiciel industriel. 
+                La résolution du jeu de Saute-Mouton met en lumière l'importance d'une modélisation précise des contraintes. 
+            </p>
+            <p class="text-paragraph">
+                Dans le cadre de l'<strong>Informatique Industrielle</strong> et de l'<strong>Automatique</strong>, ce type d'exercice 
+                n'est pas qu'un jeu : la gestion stricte des états (`Plateau[i]`), la vérification avant action (`if coup permis`), 
+                et la détection de blocage (`Deadlock`) sont des concepts fondamentaux pour la programmation des automates programmables 
+                industriels (API / PLC) ou la sécurisation de protocoles de communication de bas niveau.
+            </p>
+
+        </main>
+
+        <footer class="footer-section">
+            <p>Code Source Java, Interface Web Interactive & Algorithmes créés pour le rendu académique.</p>
+            <div class="footer-signature">Développé par Dahane Ahmed Lamine - 2026</div>
+        </footer>
+
+    </div>
+
+    <script>
+        /**
+         * Moteur du Jeu Saute-Mouton (GameEngine)
+         * Architecture modulaire (Pattern Module) pour isoler la logique.
+         */
+        const GameEngine = (function() {
+            
+            // --- Variables d'état interne (équivalent des variables globales Java) ---
+            let plateauState = [];   // Tableau modélisant le système
+            let emptyIndex = 0;      // Pointeur sur l'espace vide
+            let nbPairs = 0;         // Nombre N (pions par équipe)
+            let movesCount = 0;      // Compteur de coups
+            let isGameOver = false;  // Flag d'arrêt
+            let isAnimating = false; // Verrou anti-spam pendant l'animation CSS
+
+            // --- Éléments du DOM ---
+            const uiBoard = document.getElementById('domBoard');
+            const uiConsole = document.getElementById('domConsole');
+            const uiInputN = document.getElementById('inputNbPions');
+            const uiStatMoves = document.getElementById('statMoves');
+            const uiStatStatus = document.getElementById('statStatus');
+
+            // --- Système de Logging Interne ---
+            function logMsg(message, level = 'info') {
+                const p = document.createElement('div');
+                p.className = `log-entry log-${level}`;
+                
+                // Horodatage pour faire pro
+                const now = new Date();
+                const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}.${String(now.getMilliseconds()).padStart(3,'0')}`;
+                
+                p.innerHTML = `[${timeStr}] ${message}`;
+                uiConsole.appendChild(p);
+                // Auto-scroll vers le bas
+                uiConsole.scrollTop = uiConsole.scrollHeight;
+            }
+
+            // --- Module 1 : Initialisation ---
+            function initialize() {
+                // Récupération sécurisée de la saisie utilisateur
+                let rawVal = parseInt(uiInputN.value);
+                if (isNaN(rawVal) || rawVal < 1 || rawVal > 10) {
+                    logMsg("FATAL : Taille N invalide. Rétablissement à N=3.", "error");
+                    uiInputN.value = 3;
+                    rawVal = 3;
+                }
+
+                nbPairs = rawVal;
+                plateauState = [];
+                movesCount = 0;
+                isGameOver = false;
+
+                // Construction dynamique du tableau (N Noirs, 1 Vide, N Rouges)
+                for (let i = 0; i < nbPairs; i++) plateauState.push('N');
+                emptyIndex = nbPairs;
+                plateauState.push(' ');
+                for (let i = 0; i < nbPairs; i++) plateauState.push('R');
+
+                // Réinitialisation de l'UI
+                uiConsole.innerHTML = '';
+                uiStatMoves.innerText = movesCount;
+                uiStatStatus.innerText = "En cours";
+                uiStatStatus.style.color = "var(--google-violet)";
+                
+                logMsg(`Moteur initialisé avec succès. Allocation mémoire pour T=${plateauState.length}.`, "system");
+                logMsg(`Configuration de départ prête (N=${nbPairs}). À vous de jouer.`, "info");
+
+                renderBoard();
+            }
+
+            // --- Module 2 : Affichage / Rendu du DOM ---
+            function renderBoard(movingIndex = -1, targetIndex = -1, animationClass = '') {
+                uiBoard.innerHTML = ''; // Clear complet
+
+                plateauState.forEach((charValue, i) => {
+                    // Conteneur de la case (inclut le numéro de l'index)
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'tile-wrapper';
+
+                    // L'index textuel en haut du pion
+                    const indexLabel = document.createElement('span');
+                    indexLabel.className = 'tile-index';
+                    indexLabel.innerText = i;
+                    wrapper.appendChild(indexLabel);
+
+                    // Le pion lui-même
+                    const pion = document.createElement('div');
+                    // On attribue la classe 'N', 'R' ou 'vide' selon la valeur
+                    pion.className = `pion ${charValue === ' ' ? 'vide' : charValue}`;
+                    pion.innerText = charValue;
+
+                    // Ajout des animations si spécifié
+                    if (i === targetIndex && animationClass !== '') {
+                        pion.classList.add(animationClass);
+                    }
+
+                    // Gestionnaire d'événement au clic
+                    pion.onclick = () => handleMoveRequest(i);
+
+                    wrapper.appendChild(pion);
+                    uiBoard.appendChild(wrapper);
+                });
+            }
+
+            // --- Module 3 : Logique de transition ---
+            function handleMoveRequest(clickedIndex) {
+                // Sécurités
+                if (isGameOver) {
+                    logMsg("Rejeté : La session est terminée. Veuillez réinitialiser.", "warning");
+                    return;
+                }
+                if (isAnimating) return; // Empêche les clics multiples pendant l'animation
+                if (clickedIndex === emptyIndex) return; // Clic sur le vide ignoré
+
+                const selectedChar = plateauState[clickedIndex];
+                let isMoveValid = false;
+                let animType = '';
+
+                logMsg(`Évaluation du clic sur l'index ${clickedIndex} (Pion ${selectedChar})...`, "system");
+
+                // Arbre de décision strictement conforme au code Java
+                if (selectedChar === 'R') {
+                    // Vérification gauche
+                    if (clickedIndex - 1 === emptyIndex) {
+                        isMoveValid = true;
+                        animType = 'moving-left';
+                    } else if (clickedIndex - 2 === emptyIndex && plateauState[clickedIndex - 1] === 'N') {
+                        isMoveValid = true;
+                        animType = 'jumping-left';
+                    }
+                } else if (selectedChar === 'N') {
+                    // Vérification droite
+                    if (clickedIndex + 1 === emptyIndex) {
+                        isMoveValid = true;
+                        animType = 'moving-right';
+                    } else if (clickedIndex + 2 === emptyIndex && plateauState[clickedIndex + 1] === 'R') {
+                        isMoveValid = true;
+                        animType = 'jumping-right';
+                    }
+                }
+
+                // Application du mouvement ou rejet
+                if (isMoveValid) {
+                    executeMove(clickedIndex, animType);
+                } else {
+                    logMsg(`Violation de contrainte : Le pion ${selectedChar} à l'index ${clickedIndex} ne peut pas se déplacer.`, "error");
+                    // Feedback visuel de refus
+                    const domTiles = uiBoard.querySelectorAll('.pion');
+                    domTiles[clickedIndex].style.transform = 'translateX(-5px)';
+                    setTimeout(() => domTiles[clickedIndex].style.transform = 'translateX(5px)', 50);
+                    setTimeout(() => domTiles[clickedIndex].style.transform = 'translateX(0)', 100);
+                }
+            }
+
+            // --- Module 3.1 : Exécution matérielle du déplacement ---
+            function executeMove(sourceIndex, animType) {
+                isAnimating = true; // Verrouiller
+                
+                // Mise à jour des stats
+                movesCount++;
+                uiStatMoves.innerText = movesCount;
+                logMsg(`Mouvement autorisé. Echange en mémoire : ${sourceIndex} <-> ${emptyIndex}`, "info");
+
+                // Effectuer le swap algorithmique
+                const temp = plateauState[sourceIndex];
+                plateauState[sourceIndex] = plateauState[emptyIndex];
+                plateauState[emptyIndex] = temp;
+                
+                // Mémoriser l'ancienne position vide qui est maintenant la position de notre pion
+                const targetLocation = emptyIndex; 
+                
+                // Mettre à jour le pointeur de la case vide
+                emptyIndex = sourceIndex;
+
+                // Redessiner avec la classe d'animation sur le pion qui vient d'arriver
+                renderBoard(sourceIndex, targetLocation, animType);
+
+                // Déverrouiller et vérifier la fin après la durée de l'animation CSS
+                setTimeout(() => {
+                    isAnimating = false;
+                    // On nettoie la classe d'animation
+                    const domTiles = uiBoard.querySelectorAll('.pion');
+                    if(domTiles[targetLocation]) {
+                        domTiles[targetLocation].classList.remove(animType);
+                    }
+                    checkEndGameConditions();
+                }, 350); // 350ms correspond à la durée de la transition CSS
+            }
+
+            // --- Module 4 : Analyse post-déplacement (Deadlock / Victoire) ---
+            function checkEndGameConditions() {
+                // 4.1 Check de Victoire (Tous les R à gauche)
+                let isVictory = true;
+                for (let i = 0; i < nbPairs; i++) {
+                    if (plateauState[i] !== 'R') {
+                        isVictory = false;
+                        break;
+                    }
+                }
+
+                if (isVictory) {
+                    isGameOver = true;
+                    uiStatStatus.innerText = "SUCCÈS !";
+                    uiStatStatus.style.color = "var(--color-success)";
+                    logMsg("CRITIQUE : Condition de victoire atteinte ! Puzzle résolu.", "success");
+                    return; // Fin du traitement
+                }
+
+                // 4.2 Check de Blocage (Algorithme de détection de Deadlock)
+                let isDeadlock = true;
+                for (let i = 0; i < plateauState.length; i++) {
+                    if (i === emptyIndex) continue; // On passe la case vide
+                    
+                    const p = plateauState[i];
+                    // Si R peut bouger
+                    if (p === 'R' && (i - 1 === emptyIndex || (i - 2 === emptyIndex && plateauState[i - 1] === 'N'))) {
+                        isDeadlock = false; 
+                        break;
+                    }
+                    // Si N peut bouger
+                    if (p === 'N' && (i + 1 === emptyIndex || (i + 2 === emptyIndex && plateauState[i + 1] === 'R'))) {
+                        isDeadlock = false;
+                        break;
+                    }
+                }
+
+                if (isDeadlock) {
+                    isGameOver = true;
+                    uiStatStatus.innerText = "BLOCAGE MATÉRIEL";
+                    uiStatStatus.style.color = "var(--color-error)";
+                    logMsg("CRITIQUE : Situation de deadlock. Plus aucun mouvement matériel n'est possible. Echec.", "error");
+                }
+            }
+
+            // --- API publique du GameEngine ---
+            return {
+                initialize: initialize
+            };
+
+        })();
+
+        // Démarrage automatique au chargement de la page Web
+        window.onload = function() {
+            GameEngine.initialize();
+        };
+
+    </script>
+</body>
+</html>
